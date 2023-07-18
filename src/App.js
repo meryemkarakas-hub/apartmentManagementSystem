@@ -4,7 +4,7 @@ import Register from './pages/Register';
 function App() {
   return (
     <div>
-      <Register></Register>
+      <Register/>
     </div>
   );
 }

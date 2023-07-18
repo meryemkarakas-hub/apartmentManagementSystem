@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { Box, Paper, TextField, Button, Container, Stack } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -12,47 +8,45 @@ import "../App.css";
 export default class Register extends Component {
   render() {
     return (
-      <div className="register-container">
-        <Box className="box-container">
-          <Paper className="box-item" elevation={3}>
-            <h1 className="register-heading">REGISTER</h1>
-            <div className="text-fields-container">
+      <>
+        <Container maxWidth="sm" sx={{justifyContent:'center',display: 'flex',alignItems:'center',height:'100vh'}}>
+          <Paper elevation={3}>
+            <Box m={3} p={2}>
+              <h1 className="register-heading">REGISTER</h1>
+              <Stack direction="column" spacing={3}>
               <TextField
                 required
                 id="outlined-required-username"
                 label="Username"
                 variant="standard"
-                className="text-field custom-width"
               />
               <TextField
                 required
                 id="outlined-required-email"
                 label="Email"
                 variant="standard"
-                className="text-field custom-width"
               />
               <TextField
                 required
                 id="outlined-required-re-email"
                 label="Re-Email"
                 variant="standard"
-                className="text-field custom-width"
               />
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={["DatePicker"]}>
-                  <DatePicker
-                    label="Birthday*"
-                    className="text-field custom-width"
-                  />
-                </DemoContainer>
+                <DatePicker
+                  label="Birthday*"
+                  slotProps={{ textField: { variant: "standard" } }}
+                />
               </LocalizationProvider>
-            </div>
-            <Button variant="contained" className="register-button">
-              Register
-            </Button>
+
+              <Button variant="contained" color="success" size="large">
+                Register
+              </Button>
+              </Stack>
+            </Box>
           </Paper>
-        </Box>
-      </div>
+        </Container>
+      </>
     );
   }
 }
