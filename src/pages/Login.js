@@ -1,46 +1,53 @@
 import React from "react";
-import { Box, Paper, Button, Container, Stack } from "@mui/material";
-import { Link } from "react-router-dom";
+import {
+  Box,
+  Paper,
+  TextField,
+  Button,
+  Container,
+  Stack,
+  Link,
+} from "@mui/material";
 import "../App.css";
-import backgroundImage from "../images/SOFT.jpg"; // Arka plan resminin yolunu değiştirin
 
-const Register = () => {
-
-    const styles = {
-        background: {
-          backgroundImage: `url(${backgroundImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "98vh",
-          maxWidth:"100% !important" ,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "#fff",
-          fontSize: "24px",
-          fontFamily: "Arial, sans-serif"
-        },
-      };
+function Login() {
   return (
     <>
       <Container
         maxWidth="sm"
-        sx={
-          styles.background
-        }
+        sx={{
+          justifyContent: "center",
+          display: "flex",
+          alignItems: "center",
+          height: "100vh",
+        }}
       >
         <Paper elevation={3}>
           <Box m={3} p={2}>
             <h1 className="register-heading">GİRİŞ YAP</h1>
             <Stack direction="column" spacing={3}>
-              <Button
-                variant="contained"
-                color="info"
-                size="large"
-                component={Link}
-                to="/register"
-              >
-                KAYIT OL
+              <TextField
+                required
+                id="outlined-required-username"
+                label="Kullanıcı adı ya da e-posta"
+                variant="standard"
+              />
+              <TextField
+                required
+                id="outlined-required-password"
+                label="Şifre"
+                variant="standard"
+                name="password"
+                type="password"
+              />
+              <Link href="/forgot-password" variant="body2">
+                Şifremi Unuttum
+              </Link>
+              <Button variant="contained" color="success" size="large">
+                Giriş Yap
+              </Button>
+              <Button variant="contained" color="success" size="large">
+                Kayıt Ol
               </Button>
             </Stack>
           </Box>
@@ -48,6 +55,6 @@ const Register = () => {
       </Container>
     </>
   );
-};
+}
 
-export default Register;
+export default Login;

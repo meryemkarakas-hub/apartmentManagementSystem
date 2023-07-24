@@ -4,50 +4,56 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
-import backgroundImage from "../images/SOFT.jpg"; // Arka plan resminin yolunu değiştirin
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "../App.css";
 
 const Register = () => {
-  const styles = {
-    background: {
-      backgroundImage: `url(${backgroundImage})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      height: "98vh",
-      maxWidth:"100% !important" ,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: "#fff",
-      fontSize: "24px",
-      fontFamily: "Arial, sans-serif"
-    },
-  };
-
-
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     reEmail: "",
-    birthdate: "",
+    birthdate: null,
   });
 
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!formData.birthdate) {
+      toast.error("Doğum Tarihi alanı boş bırakılamaz.", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      return;
+    }
+
     const apiUrl = "http://localhost:8080/api/user/sign-up";
 
     axios
       .post(apiUrl, formData)
       .then((response) => {
         console.log("Response from the server:", response.data);
-        navigate("/login");
+        const { message, status } = response.data;
+
+        if (status === 0) {
+          toast.error(message, { position: toast.POSITION.TOP_RIGHT });
+        } else if (status === 1) {
+          toast.success(message, { position: toast.POSITION.TOP_RIGHT });
+          setTimeout(() => {
+            navigate("/login");
+          }, 6000);
+        } else {
+          toast.info(message, { position: toast.POSITION.TOP_RIGHT });
+        }
       })
       .catch((error) => {
         console.error("Error:", error);
+        toast.error("İşleminiz gerçekleştirilemedi. Lütfen tekrar deneyin.", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       });
   };
 
@@ -61,11 +67,15 @@ const Register = () => {
 
   return (
     <>
+      <ToastContainer />
       <Container
         maxWidth="sm"
-        sx={
-          styles.background
-        }
+        sx={{
+          justifyContent: "center",
+          display: "flex",
+          alignItems: "center",
+          height: "100vh",
+        }}
       >
         <Paper elevation={3}>
           <Box m={3} p={2}>
@@ -118,8 +128,13 @@ const Register = () => {
                   />
                 </LocalizationProvider>
 
-                <Button variant="contained" color="success" size="large" type="submit">
-                  Register
+                <Button
+                  variant="contained"
+                  color="success"
+                  size="large"
+                  type="submit"
+                >
+                  Kayıt Ol
                 </Button>
               </Stack>
             </form>
