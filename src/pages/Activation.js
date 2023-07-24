@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, Container, Paper, Stack, TextField } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,6 +13,8 @@ const Activation = () => {
     password: "",
     rePassword: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -30,13 +34,12 @@ const Activation = () => {
           toast.error(message, { position: toast.POSITION.TOP_RIGHT });
         } else if (status === 1) {
           toast.success(message, { position: toast.POSITION.TOP_RIGHT });
+          setTimeout(() => {
+            navigate("/login");
+          }, 6000);
         } else {
           toast.info(message, { position: toast.POSITION.TOP_RIGHT });
         }
-
-        setTimeout(() => {
-          navigate("/login");
-        }, 6000);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -52,6 +55,10 @@ const Activation = () => {
       ...prevFormData,
       [name]: value,
     }));
+  };
+
+  const handlePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
   useEffect(() => {
@@ -85,9 +92,16 @@ const Activation = () => {
                   label="Şifre"
                   variant="standard"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"} // Show the text if showPassword is true
                   value={formData.password}
                   onChange={handleChange}
+                  InputProps={{
+                    endAdornment: (
+                      <IconButton onClick={handlePasswordVisibility} edge="end">
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    ),
+                  }}
                 />
                 <TextField
                   required
@@ -95,9 +109,16 @@ const Activation = () => {
                   label="Şifre tekrar"
                   variant="standard"
                   name="rePassword"
-                  type="password"
+                  type={showPassword ? "text" : "password"} // Show the text if showPassword is true
                   value={formData.rePassword}
                   onChange={handleChange}
+                  InputProps={{
+                    endAdornment: (
+                      <IconButton onClick={handlePasswordVisibility} edge="end">
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    ),
+                  }}
                 />
                 <Button
                   variant="contained"
