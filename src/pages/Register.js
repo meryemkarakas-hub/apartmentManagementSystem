@@ -90,6 +90,7 @@ const Register = () => {
                   name="username"
                   value={formData.username}
                   onChange={handleChange}
+                  autoComplete="off" 
                 />
                 <TextField
                   required
@@ -100,6 +101,7 @@ const Register = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  autoComplete="off" 
                 />
                 <TextField
                   required
@@ -110,6 +112,7 @@ const Register = () => {
                   name="reEmail"
                   value={formData.reEmail}
                   onChange={handleChange}
+                  autoComplete="off" 
                 />
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
@@ -125,6 +128,7 @@ const Register = () => {
                         },
                       })
                     }
+                    autoComplete="off" 
                   />
                 </LocalizationProvider>
 
