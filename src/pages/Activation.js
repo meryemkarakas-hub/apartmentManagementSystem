@@ -88,11 +88,11 @@ const Activation = () => {
               <Stack direction="column" spacing={3}>
                 <TextField
                   required
-                  id="outlined-required-reEmail"
+                  id="password"
                   label="Şifre"
                   variant="standard"
                   name="password"
-                  type={showPassword ? "text" : "password"} // Show the text if showPassword is true
+                  type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleChange}
                   InputProps={{
@@ -105,11 +105,11 @@ const Activation = () => {
                 />
                 <TextField
                   required
-                  id="outlined-required-email"
+                  id="repassword"
                   label="Şifre tekrar"
                   variant="standard"
                   name="rePassword"
-                  type={showPassword ? "text" : "password"} // Show the text if showPassword is true
+                  type={showPassword ? "text" : "password"}
                   value={formData.rePassword}
                   onChange={handleChange}
                   InputProps={{

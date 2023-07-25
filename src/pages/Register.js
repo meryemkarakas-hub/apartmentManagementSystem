@@ -84,35 +84,35 @@ const Register = () => {
               <Stack direction="column" spacing={3}>
                 <TextField
                   required
-                  id="outlined-required-username"
+                  id="required-username"
                   label="Kullanıcı adı"
                   variant="standard"
                   name="username"
                   value={formData.username}
                   onChange={handleChange}
-                  autoComplete="off" 
+                  autoComplete="off"
                 />
                 <TextField
                   required
-                  id="outlined-required-email"
+                  id="required-email"
                   label="E-posta adresi"
                   variant="standard"
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  autoComplete="off" 
+                  autoComplete="off"
                 />
                 <TextField
                   required
-                  id="outlined-required-re-email"
+                  id="required-re-email"
                   label="E-posta adresi tekrar"
                   variant="standard"
                   type="email"
                   name="reEmail"
                   value={formData.reEmail}
                   onChange={handleChange}
-                  autoComplete="off" 
+                  autoComplete="off"
                 />
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
@@ -128,7 +128,7 @@ const Register = () => {
                         },
                       })
                     }
-                    autoComplete="off" 
+                    autoComplete="off"
                   />
                 </LocalizationProvider>
 

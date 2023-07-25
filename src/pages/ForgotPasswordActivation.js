@@ -1,35 +1,19 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Container,
-  Paper,
-  Stack,
-  TextField,
-  Link,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import IconButton from "@mui/material/IconButton";
+import { Box, Button, Container, Paper, Stack, TextField } from "@mui/material";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../App.css";
-import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const ForgotPasswordActivation = () => {
   const [formData, setFormData] = useState({
-    userNameOrEmail: "",
-    password: "",
+    usernameOrEmail: "",
   });
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const apiUrl = "http://localhost:8080/api/user/login";
+    const apiUrl = "http://localhost:8080/api/user/forgot-password-activation";
 
     axios
       .post(apiUrl, formData)
@@ -42,9 +26,6 @@ const Login = () => {
           toast.error(message, { position: toast.POSITION.TOP_RIGHT });
         } else if (status === 1) {
           toast.success(message, { position: toast.POSITION.TOP_RIGHT });
-          setTimeout(() => {
-            navigate("/login");
-          }, 6000);
         } else {
           toast.info(message, { position: toast.POSITION.TOP_RIGHT });
         }
@@ -65,18 +46,6 @@ const Login = () => {
     }));
   };
 
-  const handlePasswordVisibility = () => {
-    setShowPassword((prevShowPassword) => !prevShowPassword);
-  };
-
-  const handleRegisterClick = () => {
-    navigate("/register");
-  };
-
-  const handleForgotPasswordClick = () => {
-    navigate("/forgot-password");
-  };
-
   return (
     <>
       <ToastContainer />
@@ -91,46 +60,27 @@ const Login = () => {
       >
         <Paper elevation={3}>
           <Box m={3} p={2}>
-            <h1 className="register-heading">GİRİŞ YAP</h1>
+            <h1 className="register-heading">ŞİFREMİ UNUTTUM</h1>
             <form onSubmit={handleSubmit}>
               <Stack direction="column" spacing={3}>
                 <TextField
                   required
-                  id="username-field"
-                  label="Kullanıcı adı ya da e-posta"
+                  id="outlined-required-usernameOrEmail"
+                  label="E-posta adresi"
                   variant="standard"
-                />
-                <TextField
-                  required
-                  id="password-field"
-                  label="Şifre"
-                  variant="standard"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  value={formData.password}
+                  type="email"
+                  name="usernameOrEmail"
+                  value={formData.usernameOrEmail}
                   onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <IconButton onClick={handlePasswordVisibility} edge="end">
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    ),
-                  }}
+                  autoComplete="off"
                 />
-                <Link variant="body2" onClick={handleForgotPasswordClick}>
-                  Şifremi Unuttum
-                </Link>
-
-                <Button variant="contained" color="success" size="large">
-                  Giriş Yap
-                </Button>
                 <Button
                   variant="contained"
                   color="success"
                   size="large"
-                  onClick={handleRegisterClick}
+                  type="submit"
                 >
-                  Kayıt Ol
+                  Aktivasyon Kodu Gönder
                 </Button>
               </Stack>
             </form>
@@ -141,4 +91,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPasswordActivation;
