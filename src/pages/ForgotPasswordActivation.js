@@ -7,7 +7,7 @@ import "../App.css";
 
 const ForgotPasswordActivation = () => {
   const [formData, setFormData] = useState({
-    usernameOrEmail: "",
+    email: "",
   });
 
   const handleSubmit = (event) => {
@@ -65,12 +65,12 @@ const ForgotPasswordActivation = () => {
               <Stack direction="column" spacing={3}>
                 <TextField
                   required
-                  id="outlined-required-usernameOrEmail"
+                  id="outlined-required-email"
                   label="E-posta adresi"
                   variant="standard"
                   type="email"
-                  name="usernameOrEmail"
-                  value={formData.usernameOrEmail}
+                  name="email"
+                  value={formData.email}
                   onChange={handleChange}
                   autoComplete="off"
                 />

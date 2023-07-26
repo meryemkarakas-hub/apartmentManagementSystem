@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 const Activation = () => {
   const [formData, setFormData] = useState({
     password: "",
-    rePassword: "",
+    rePassword: ""
   });
 
   const [showPassword, setShowPassword] = useState(false);

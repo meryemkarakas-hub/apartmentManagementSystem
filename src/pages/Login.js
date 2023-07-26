@@ -96,9 +96,13 @@ const Login = () => {
               <Stack direction="column" spacing={3}>
                 <TextField
                   required
-                  id="username-field"
+                  id="required-userNameOrEmail"
                   label="Kullanıcı adı ya da e-posta"
                   variant="standard"
+                  name="userNameOrEmail"
+                  value={formData.userNameOrEmail}
+                  onChange={handleChange}
+                  autoComplete="off"
                 />
                 <TextField
                   required
@@ -120,8 +124,12 @@ const Login = () => {
                 <Link variant="body2" onClick={handleForgotPasswordClick}>
                   Şifremi Unuttum
                 </Link>
-
-                <Button variant="contained" color="success" size="large">
+                <Button
+                  variant="contained"
+                  color="success"
+                  size="large"
+                  type="submit"
+                >
                   Giriş Yap
                 </Button>
                 <Button
