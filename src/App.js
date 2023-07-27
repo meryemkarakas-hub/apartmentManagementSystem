@@ -4,15 +4,22 @@ import Register from "./pages/Register";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Activation from "./pages/Activation";
 import ForgotPasswordActivation from "./pages/ForgotPasswordActivation.js";
-import Profile from "./pages/Profile";
+import Application from "./pages/Application";
 import NestedList from "./pages/NestedList";
+
+
+
+
+
+
 
 function App() {
   return (
     <div>
-     <Profile/>
-      {/* <Router>
+
+      <Router>
         <Routes>
+        <Route path="/application" element={<Application />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
@@ -24,7 +31,7 @@ function App() {
             element={<ForgotPasswordActivation />}
           />
         </Routes>
-      </Router> */}
+      </Router>
     </div>
   );
 }
