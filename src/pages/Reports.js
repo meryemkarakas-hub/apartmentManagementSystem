@@ -109,7 +109,7 @@ const headCells = [
     id: 'lastLoginTime',
     numeric: true,
     disablePadding: false,
-    label: 'Sisteme En Son Giriş Zamanı',
+    label: 'Sisteme Son Giriş Zamanı',
   },
 ];
 
@@ -146,7 +146,7 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
               sx={{
-                fontWeight: 'bold'
+                fontWeight: 'bold', 
               }}
             >
               {headCell.label}
@@ -202,7 +202,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          Raporlar
+          Kullanıcı Raporları
         </Typography>
       )}
 
@@ -229,7 +229,7 @@ EnhancedTableToolbar.propTypes = {
 
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [orderBy, setOrderBy] = React.useState('email');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -243,19 +243,19 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      const newSelected = rows.map((n) => n.username);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, username) => {
+    const selectedIndex = selected.indexOf(username);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, username);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -283,7 +283,7 @@ export default function EnhancedTable() {
     setDense(event.target.checked);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (username) => selected.indexOf(username) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -318,17 +318,17 @@ export default function EnhancedTable() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.name);
+                const isItemSelected = isSelected(row.username);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.name)}
+                    onClick={(event) => handleClick(event, row.username)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.name}
+                    key={row.username}
                     selected={isItemSelected}
                     sx={{ cursor: 'pointer' }}
                   >

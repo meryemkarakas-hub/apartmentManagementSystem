@@ -6,6 +6,7 @@ import Activation from "./pages/Activation";
 import ForgotPasswordActivation from "./pages/ForgotPasswordActivation.js";
 import Application from "./pages/Application";
 import NestedList from "./pages/NestedList";
+import Profile from "./pages/Profile";
 
 
 
@@ -19,6 +20,7 @@ function App() {
 
       <Router>
         <Routes>
+        <Route path="/profile" element={<Profile />} />
         <Route path="/application" element={<Application />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
