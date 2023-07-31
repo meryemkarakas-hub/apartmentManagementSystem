@@ -178,12 +178,12 @@ function Application() {
                   horizontal: "right",
                 }}
                 open={Boolean(anchorElUser)}
-                onClose={() => handleCloseUserMenu("")} // Empty label, we don't want to trigger any action on default close
+                onClose={() => handleCloseUserMenu("")} 
               >
                 {settings.map((setting) => (
                   <MenuItem
                     key={setting.label}
-                    onClick={() => handleCloseUserMenu(setting.label)} // Pass the label value to the function
+                    onClick={() => handleCloseUserMenu(setting.label)} 
                   >
                     <div
                       style={{

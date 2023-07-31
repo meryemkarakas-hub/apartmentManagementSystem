@@ -51,12 +51,9 @@ const ImageUploadField = () => {
         padding: '20px',
       }}
     >
-      {/* Add the title here */}
-      <Typography variant="h5" color="primary" style={{ fontWeight: 'bold' }}>
+      <Typography variant="h5" color="black" style={{ fontWeight: 'bold' }}>
         PROFİLİM
       </Typography>
-
-      {/* Rest of the component code */}
       <Box
         {...getRootProps()}
         sx={{
@@ -93,12 +90,12 @@ const ImageUploadField = () => {
         FOTOĞRAFI KALDIR
       </Button>
       <FormControl sx={{ minWidth: 120, width: '250px', marginTop: '30px' }}>
-        <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
+        <InputLabel id="demo-simple-select-helper-label">Yaşanılan Şehir</InputLabel>
         <Select
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select-helper"
           value={age}
-          label="Age"
+          label="Yaşanılan Şehir"
           onChange={handleChange}
         >
           <MenuItem value="">
@@ -111,7 +108,7 @@ const ImageUploadField = () => {
       </FormControl>
       <TextField
         id="outlined-basic"
-        label="Outlined"
+        label="Telefon Numarası"
         variant="outlined"
         style={{ width: '250px', marginTop: '30px' }}
       />
