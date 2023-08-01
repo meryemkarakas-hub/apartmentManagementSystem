@@ -3,20 +3,33 @@ import { Box, Button, Container, Paper, Stack, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "../App.css";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 
 const Activation = () => {
   const [formData, setFormData] = useState({
     password: "",
-    rePassword: ""
+    rePassword: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
+
+  const [snackbarState, setSnackbarState] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  const handleSnackbarClose = () => {
+    setSnackbarState({ ...snackbarState, open: false });
+  };
+
+  const handleSnackbarOpen = (message, severity) => {
+    setSnackbarState({ open: true, message, severity });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -31,21 +44,22 @@ const Activation = () => {
         const { message, status } = response.data;
 
         if (status === 0) {
-          toast.error(message, { position: toast.POSITION.TOP_RIGHT });
+          handleSnackbarOpen(message, "error");
         } else if (status === 1) {
-          toast.success(message, { position: toast.POSITION.TOP_RIGHT });
+          handleSnackbarOpen(message, "success");
           setTimeout(() => {
             navigate("/login");
           }, 6000);
         } else {
-          toast.info(message, { position: toast.POSITION.TOP_RIGHT });
+          handleSnackbarOpen(message, "info");
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        toast.error("Aktivasyon başarısız. Lütfen tekrar deneyin.", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        handleSnackbarOpen(
+          "Aktivasyon başarısız. Lütfen tekrar deneyin.",
+          "error"
+        );
       });
   };
 
@@ -71,7 +85,6 @@ const Activation = () => {
 
   return (
     <>
-      <ToastContainer />
       <Container
         maxWidth="sm"
         sx={{
@@ -133,6 +146,23 @@ const Activation = () => {
           </Box>
         </Paper>
       </Container>
+      <Snackbar
+        open={snackbarState.open}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <MuiAlert
+          onClose={handleSnackbarClose}
+          severity={snackbarState.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarState.message}
+        </MuiAlert>
+      </Snackbar>
     </>
   );
 };

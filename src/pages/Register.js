@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import { Box, Paper, TextField, Button, Container, Stack } from "@mui/material";
+import {
+  Box,
+  Paper,
+  TextField,
+  Button,
+  Container,
+  Stack,
+  Snackbar,
+} from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Alert } from "@mui/material";
 
 import "../App.css";
 
@@ -18,15 +25,27 @@ const Register = () => {
     birthdate: null,
   });
 
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("info");
+
   const navigate = useNavigate();
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
+  const showSnackbar = (message, status) => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(status === 0 ? "error" : "success");
+    setSnackbarOpen(true);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (!formData.birthdate) {
-      toast.error("Doğum Tarihi alanı boş bırakılamaz.", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      showSnackbar("Doğum tarihi alanı boş bırakılamaz.", 0);
       return;
     }
 
@@ -37,23 +56,19 @@ const Register = () => {
       .then((response) => {
         console.log("Response from the server:", response.data);
         const { message, status } = response.data;
-
-        if (status === 0) {
-          toast.error(message, { position: toast.POSITION.TOP_RIGHT });
-        } else if (status === 1) {
-          toast.success(message, { position: toast.POSITION.TOP_RIGHT });
+        showSnackbar(message, status);
+        if (status === 1) {
           setTimeout(() => {
             navigate("/login");
           }, 6000);
-        } else {
-          toast.info(message, { position: toast.POSITION.TOP_RIGHT });
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        toast.error("İşleminiz gerçekleştirilemedi. Lütfen tekrar deneyin.", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        showSnackbar(
+          "İşleminiz gerçekleştirilemedi. Lütfen tekrar deneyiniz.",
+          0
+        );
       });
   };
 
@@ -67,7 +82,16 @@ const Register = () => {
 
   return (
     <>
-      <ToastContainer />
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
       <Container
         maxWidth="sm"
         sx={{

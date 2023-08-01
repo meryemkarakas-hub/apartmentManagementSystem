@@ -7,15 +7,13 @@ import {
   Stack,
   TextField,
   Link,
+  Snackbar,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "../App.css";
 import { useNavigate } from "react-router-dom";
-
+import Alert from "@mui/lab/Alert"; 
 const Login = () => {
   const [formData, setFormData] = useState({
     userNameOrEmail: "",
@@ -23,8 +21,21 @@ const Login = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const navigate = useNavigate();
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
+
+  const handleOpenSnackbar = (message, severity) => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+    setSnackbarOpen(true);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -39,21 +50,19 @@ const Login = () => {
         const { message, status } = response.data;
 
         if (status === 0) {
-          toast.error(message, { position: toast.POSITION.TOP_RIGHT });
+          handleOpenSnackbar(message, "error");
         } else if (status === 1) {
-          toast.success(message, { position: toast.POSITION.TOP_RIGHT });
+          handleOpenSnackbar(message, "success");
           setTimeout(() => {
             navigate("/application");
           }, 6000);
         } else {
-          toast.info(message, { position: toast.POSITION.TOP_RIGHT });
+          handleOpenSnackbar(message, "info");
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        toast.error("İşleminiz başarısız. Lütfen tekrar deneyin.", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        handleOpenSnackbar("İşleminiz başarısız. Lütfen tekrar deneyiniz.", "error");
       });
   };
 
@@ -79,7 +88,21 @@ const Login = () => {
 
   return (
     <>
-      <ToastContainer />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        message={snackbarMessage}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
       <Container
         maxWidth="sm"
         sx={{

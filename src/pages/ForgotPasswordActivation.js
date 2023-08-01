@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { Box, Button, Container, Paper, Stack, TextField } from "@mui/material";
+import { Box, Button, Container, Paper, Snackbar, Stack, TextField } from "@mui/material";
+import { Alert } from "@mui/lab"; // Import the Alert component from @mui/lab
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import "../App.css";
 
 const ForgotPasswordActivation = () => {
   const [formData, setFormData] = useState({
     email: "",
   });
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -23,18 +26,23 @@ const ForgotPasswordActivation = () => {
         const { message, status } = response.data;
 
         if (status === 0) {
-          toast.error(message, { position: toast.POSITION.TOP_RIGHT });
+          setSnackbarMessage(message);
+          setSnackbarSeverity("error");
         } else if (status === 1) {
-          toast.success(message, { position: toast.POSITION.TOP_RIGHT });
+          setSnackbarMessage(message);
+          setSnackbarSeverity("success");
         } else {
-          toast.info(message, { position: toast.POSITION.TOP_RIGHT });
+          setSnackbarMessage(message);
+          setSnackbarSeverity("info");
         }
+
+        setSnackbarOpen(true);
       })
       .catch((error) => {
         console.error("Error:", error);
-        toast.error("İşleminiz başarısız. Lütfen tekrar deneyin.", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        setSnackbarMessage("İşleminiz başarısız. Lütfen tekrar deneyin.");
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true);
       });
   };
 
@@ -46,9 +54,26 @@ const ForgotPasswordActivation = () => {
     }));
   };
 
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
+
   return (
     <>
-      <ToastContainer />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
       <Container
         maxWidth="sm"
         sx={{
