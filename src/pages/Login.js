@@ -43,7 +43,7 @@ const Login = () => {
         } else if (status === 1) {
           toast.success(message, { position: toast.POSITION.TOP_RIGHT });
           setTimeout(() => {
-            navigate("/login");
+            navigate("/application");
           }, 6000);
         } else {
           toast.info(message, { position: toast.POSITION.TOP_RIGHT });

@@ -11,40 +11,39 @@ import axios from "axios";
 
 const Reports = () => {
   const [rows, setRows] = React.useState([]);
-  const [page, setPage] = React.useState(0); // Geçerli sayfayı takip etmek için durum
-  const rowsPerPage = 10; // Sayfa başına 10 satır göster
+  const [page, setPage] = React.useState(0); 
+  const rowsPerPage = 10;
 
   const fetchDataFromAPI = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/user/statistics'); // API endpointinizi buraya yazın
+      const response = await axios.get('http://localhost:8080/api/user/statistics'); 
       const data = response.data;
-      setRows(data); // Getirilen veri ile durumu güncelle
+      setRows(data); 
     } catch (error) {
       console.error('Veri alınırken hata oluştu:', error);
     }
   };
 
   React.useEffect(() => {
-    // Sayfa yüklendiğinde veriyi getir
     fetchDataFromAPI();
   }, []);
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage); // Sayfa değiştiğinde geçerli sayfayı güncelle
+    setPage(newPage); 
   };
 
-  // Tarih ve saati "gün/ay/yıl, saat:dakika" formatında göstermek için fonksiyonu düzenle
+ 
   const formatDateTime = (dateTimeString) => {
     const date = new Date(dateTimeString);
-    const day = String(date.getDate()).padStart(2, '0'); // Günü iki haneli göster ve başına 0 ekle (eğer gerekli)
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Ayı iki haneli göster ve başına 0 ekle (eğer gerekli)
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
     const year = date.getFullYear(); // Yılı doğrudan al
-    const hours = String(date.getHours()).padStart(2, '0'); // Saati iki haneli göster ve başına 0 ekle (eğer gerekli)
-    const minutes = String(date.getMinutes()).padStart(2, '0'); // Dakikayı iki haneli göster ve başına 0 ekle (eğer gerekli)
+    const hours = String(date.getHours()).padStart(2, '0'); 
+    const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${day}/${month}/${year}, ${hours}:${minutes}`;
   };
 
-  // Geçerli sayfadaki ilk ve son satırların indekslerini hesapla
+  
   const startIndex = page * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
 
@@ -79,12 +78,12 @@ const Reports = () => {
       </Table>
       <TablePagination
         component="div"
-        count={rows.length} // Toplam satır sayısı
+        count={rows.length} 
         rowsPerPage={rowsPerPage}
         page={page}
-        onPageChange={handleChangePage} // Sayfa değişikliklerini yöneten fonksiyon
-        rowsPerPageOptions={[10]} // Sayfa başına satır seçeneklerini sadece 10 olarak göster
-        labelRowsPerPage={null} // "Satır başına" etiketini gizle
+        onPageChange={handleChangePage}
+        rowsPerPageOptions={[10]} 
+        labelRowsPerPage={null} 
       />
     </TableContainer>
   );
