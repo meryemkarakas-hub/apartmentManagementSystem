@@ -68,12 +68,13 @@ function Application() {
 
   return (
     <div>
-      <AppBar position="static" sx={{ backgroundColor: "rgb(7, 145, 48)",marginBottom: "30px" }}>
+      <AppBar
+        position="static"
+        sx={{ backgroundColor: "rgb(7, 145, 48)", marginBottom: "30px" }}
+      >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <HomeIcon
-              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-            />
+            <HomeIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
@@ -122,9 +123,7 @@ function Application() {
                 }}
               ></Menu>
             </Box>
-            <AdbIcon
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            />
+            <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
             <Typography
               variant="h5"
               noWrap
@@ -153,9 +152,7 @@ function Application() {
                     }
                     sx={{ p: 0 }}
                   >
-                    <Typography sx={{ color: "white" }}>
-                      {username}
-                    </Typography>
+                    <Typography sx={{ color: "white" }}>{username}</Typography>
                     {isMenuOpen ? (
                       <ArrowDropUpIcon sx={{ color: "white" }} />
                     ) : (
@@ -178,12 +175,12 @@ function Application() {
                   horizontal: "right",
                 }}
                 open={Boolean(anchorElUser)}
-                onClose={() => handleCloseUserMenu("")} 
+                onClose={() => handleCloseUserMenu("")}
               >
                 {settings.map((setting) => (
                   <MenuItem
                     key={setting.label}
-                    onClick={() => handleCloseUserMenu(setting.label)} 
+                    onClick={() => handleCloseUserMenu(setting.label)}
                   >
                     <div
                       style={{

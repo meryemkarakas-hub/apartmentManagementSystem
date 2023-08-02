@@ -57,7 +57,11 @@ const Profile = () => {
 
   return (
     <div>
-      <Typography variant="h5" color="black" style={{ fontWeight: "bold", marginBottom: "20px" }}>
+      <Typography
+        variant="h5"
+        color="black"
+        style={{ fontWeight: "bold", marginBottom: "20px" }}
+      >
         PROFİLİM
       </Typography>
       <Box
@@ -84,7 +88,9 @@ const Profile = () => {
           />
         ) : (
           <Typography variant="body1" color="textSecondary">
-            {isDragActive ? "Dosyayı bırakın..." : "Resmi sürükleyin veya tıklayın"}
+            {isDragActive
+              ? "Dosyayı bırakın..."
+              : "Resmi sürükleyin veya tıklayın"}
           </Typography>
         )}
       </Box>
@@ -100,12 +106,20 @@ const Profile = () => {
           variant="contained"
           color="primary"
           onClick={() => setUploadedFile(null)}
-          style={{ width: "175px", backgroundColor: "green", marginBottom: "10px" }}
+          style={{
+            width: "175px",
+            backgroundColor: "green",
+            marginBottom: "10px",
+          }}
         >
           FOTOĞRAFI KALDIR
         </Button>
-        <FormControl sx={{ minWidth: 120, width: "250px", marginBottom: "10px" }}>
-          <InputLabel id="demo-simple-select-helper-label">Yaşanılan Şehir</InputLabel>
+        <FormControl
+          sx={{ minWidth: 120, width: "250px", marginBottom: "10px" }}
+        >
+          <InputLabel id="demo-simple-select-helper-label">
+            Yaşanılan Şehir
+          </InputLabel>
           <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
@@ -121,11 +135,11 @@ const Profile = () => {
             onChange={(e) => setSelectedCity(e.target.value)}
           >
             <MenuItem value="">
-              <em>None</em>
+              <em>Seçimi temizle</em>
             </MenuItem>
             {cities.map((city) => (
-              <MenuItem key={city.id} value={city.ad}>
-                {city.ad}
+              <MenuItem key={city.id} value={city.cityName}>
+                {city.cityName}
               </MenuItem>
             ))}
           </Select>

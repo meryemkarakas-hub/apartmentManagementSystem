@@ -13,7 +13,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Alert from "@mui/lab/Alert"; 
+import Alert from "@mui/lab/Alert";
 const Login = () => {
   const [formData, setFormData] = useState({
     userNameOrEmail: "",
@@ -62,7 +62,10 @@ const Login = () => {
       })
       .catch((error) => {
         console.error("Error:", error);
-        handleOpenSnackbar("İşleminiz başarısız. Lütfen tekrar deneyiniz.", "error");
+        handleOpenSnackbar(
+          "İşleminiz başarısız. Lütfen tekrar deneyiniz.",
+          "error"
+        );
       });
   };
 
