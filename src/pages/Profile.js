@@ -9,11 +9,8 @@ import TextField from "@mui/material/TextField";
 import axios from "axios";
 
 const Profile = () => {
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [open, setOpen] = React.useState(false);
   const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [selectedCity, setSelectedCity] = useState(null); // Initially, it's null until the user selects a city
 
   const fetchDataFromAPI = async () => {
     try {
@@ -29,25 +26,23 @@ const Profile = () => {
     fetchDataFromAPI();
   }, []);
 
-  const onDrop = useCallback((acceptedFiles) => {
-    const file = acceptedFiles[0];
-    setUploadedFile(file);
-  }, []);
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: "image/jpeg, image/jpg, image/png",
-    multiple: false,
-    onDrop,
-  });
-
   const saveProfileData = async () => {
     try {
-      const formData = new FormData();
-      formData.append("profileImage", uploadedFile);
-      formData.append("city", selectedCity);
-      formData.append("phoneNumber", phoneNumber);
+      if (!selectedCity) {
+        console.error("Şehir seçmediniz!");
+        return;
+      }
 
-      await axios.post("http://localhost:8080/api/user/profile", formData);
+      const requestData = {
+        city: selectedCity.cityName, // Use the cityName from the selectedCity object
+        cityId: selectedCity.id, // Use the id from the selectedCity object
+      };
+
+      await axios.post("http://localhost:8080/api/user/profile", requestData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       console.log("Profile data saved successfully!");
     } catch (error) {
@@ -64,36 +59,7 @@ const Profile = () => {
       >
         PROFİLİM
       </Typography>
-      <Box
-        {...getRootProps()}
-        sx={{
-          width: "175px",
-          height: "175px",
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          cursor: "pointer",
-          marginLeft: "0",
-          marginRight: "auto",
-          border: "1px solid #ccc",
-          marginTop: "20px",
-        }}
-      >
-        <input {...getInputProps()} />
-        {uploadedFile ? (
-          <img
-            src={URL.createObjectURL(uploadedFile)}
-            alt="Uploaded"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        ) : (
-          <Typography variant="body1" color="textSecondary">
-            {isDragActive
-              ? "Dosyayı bırakın..."
-              : "Resmi sürükleyin veya tıklayın"}
-          </Typography>
-        )}
-      </Box>
+
       <Box
         sx={{
           display: "flex",
@@ -102,18 +68,6 @@ const Profile = () => {
           marginTop: "20px",
         }}
       >
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setUploadedFile(null)}
-          style={{
-            width: "175px",
-            backgroundColor: "green",
-            marginBottom: "10px",
-          }}
-        >
-          FOTOĞRAFI KALDIR
-        </Button>
         <FormControl
           sx={{ minWidth: 120, width: "250px", marginBottom: "10px" }}
         >
@@ -138,20 +92,12 @@ const Profile = () => {
               <em>Seçimi temizle</em>
             </MenuItem>
             {cities.map((city) => (
-              <MenuItem key={city.id} value={city.cityName}>
+              <MenuItem key={city.id} value={city}>
                 {city.cityName}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-        <TextField
-          id="outlined-basic"
-          label="Telefon Numarası"
-          variant="outlined"
-          style={{ width: "250px", marginBottom: "10px" }}
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
         <Button
           variant="contained"
           color="primary"
